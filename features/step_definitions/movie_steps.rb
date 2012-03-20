@@ -6,7 +6,7 @@ Given /the following movies exist/ do |movies_table|
     # you should arrange to add that movie to the database here.
     mv = Movie.create!(movie)
   end
-  assert movies_table.hashes.size == Movie.all.count
+  assert_equal movies_table.hashes.size, Movie.all.count
 end
 
 
@@ -19,12 +19,12 @@ end
 
 Then /^I should see all of the movies$/ do 
   rows = page.all("table#movies tbody tr td[1]").map! {|t| t.text}
-  assert ( rows.count == Movie.all.count )
+  assert_equal rows.count, Movie.all.count
 end
 
 Then /^I should see none of the movies$/ do 
   rows = page.all("table#movies tbody tr td[1]").map! {|t| t.text}
-  assert ( rows.count == 0)
+  assert_equal rows.count, 0
 end
 
 
