@@ -68,7 +68,11 @@ Scenario: restrict to movies with 'PG' or 'R' ratings
   And I should not see "Chicken Run"
 
 Scenario: no ratings selected
-  # see assignment
+  When I uncheck the following ratings: ratings_PG, ratings_R, ratings_PG-13, ratings_G, ratings_NC-17
+  And press "Refresh"
+  Then I should see none of the movies
 
 Scenario: all ratings selected
-  # see assignment
+  When I check the following ratings: ratings_PG, ratings_R, ratings_PG-13, ratings_G, ratings_NC-17
+  And press "Refresh"
+  Then I should see all of the movies

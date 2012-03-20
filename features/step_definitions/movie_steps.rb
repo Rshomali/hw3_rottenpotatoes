@@ -4,8 +4,9 @@ Given /the following movies exist/ do |movies_table|
   movies_table.hashes.each do |movie|
     # each returned element will be a hash whose key is the table header.
     # you should arrange to add that movie to the database here.
-    Movie.create(movie)
+    mv = Movie.create!(movie)
   end
+  assert movies_table.hashes.size == Movie.all.count
 end
 
 
@@ -14,6 +15,18 @@ Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  page.content  is the entire content of the page as a string.
   assert false, "Unimplmemented"
 end
+
+Then /^I should see all of the movies$/ do 
+  rows = page.all("table#movies tbody tr td[1]").map! {|t| t.text}
+  assert ( rows.count == Movie.all.count )
+end
+
+Then /^I should see none of the movies$/ do 
+  rows = page.all("table#movies tbody tr td[1]").map! {|t| t.text}
+  assert ( rows.count == 0)
+end
+
+
 
 # Make it easier to express checking or unchecking several boxes at once
 #  "When I uncheck the following ratings: PG, G, R"
