@@ -13,7 +13,8 @@ end
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.content  is the entire content of the page as a string.
-  assert false, "Unimplmemented"
+  titles = page.all("table#movies tbody tr td[1]").map {|t| t.text}
+  assert titles.index(e1) < titles.index(e2)
 end
 
 Then /^I should see all of the movies$/ do 
@@ -38,9 +39,9 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
   rating_list.split(/\s*,\s*/).each do |rating|
     if uncheck
-      step %{I uncheck \"#{rating}\"}
+      step %{I uncheck \"ratings_#{rating}\"}
     else
-      step %{I check \"#{rating}\"}
+      step %{I check \"ratings_#{rating}\"}
     end
   end
 end
