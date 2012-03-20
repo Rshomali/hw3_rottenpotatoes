@@ -38,3 +38,5 @@ gem 'jquery-rails'
 
 # To use debugger
 gem 'haml'
+
+gem 'ruby-debug19'
